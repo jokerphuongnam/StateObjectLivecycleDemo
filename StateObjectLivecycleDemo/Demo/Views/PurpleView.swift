@@ -1,16 +1,17 @@
 import SwiftUI
+import Observation
 
-struct GreenView: View {
-    @StateObject private var config: Config
+struct PurpleView: View {
+    private var config: Config
     
     init(config: Self.Config) {
-        self._config = .init(wrappedValue: config)
+        self.config = config
     }
     
     var body: some View {
-        let _ = print("GreenView", #function)
+        let _ = print("PurpleView", #function)
         
-        Color.green
+        Color.purple
             .overlay {
                 VStack {
                     Text(config.string)
@@ -21,15 +22,16 @@ struct GreenView: View {
     }
 }
 
-extension GreenView {
-    final class Config: ObservableObject {
-        @Published var string: String
+extension PurpleView {
+    @Observable
+    final class Config {
+        var string: String = ""
         let uuid: UUID
         
         init(string: String) {
             self.uuid = UUID()
-            self.string = string
             print(uuid.uuidString, String(describing: self.self), #function)
+            self.string = string
         }
         
         deinit {
